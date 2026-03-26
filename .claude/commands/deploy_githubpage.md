@@ -44,6 +44,8 @@ git push
 ## 步驟三：建置專案
 
 ```bash
+# 先清除舊的 build 目錄，避免殘留舊版 JS 檔案
+rm -rf build
 npm run build
 ```
 
