@@ -3,7 +3,16 @@
     "allow": [
       "Bash(git remote:*)",
       "Bash(npm run:*)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(git worktree:*)",
+      "Bash(git fetch:*)",
+      "Bash(git branch:*)",
+      "Bash(git -C /tmp/gh-pages-deploy rm -rf . --quiet)",
+      "Bash(cp -r build/. /tmp/gh-pages-deploy/)",
+      "Bash(touch /tmp/gh-pages-deploy/.nojekyll)",
+      "Bash(git -C /tmp/gh-pages-deploy add assets/ index.html .nojekyll)",
+      "Bash(git -C /tmp/gh-pages-deploy commit -m \"Deploy to GitHub Pages\")",
+      "Bash(git -C /tmp/gh-pages-deploy push origin gh-pages --force)"
     ]
   }
 }
