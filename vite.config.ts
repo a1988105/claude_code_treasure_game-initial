@@ -3,8 +3,8 @@
   import react from '@vitejs/plugin-react-swc';
   import path from 'path';
 
-  export default defineConfig({
-    base: '/claude_code_treasure_game-initial/',
+  export default defineConfig(({ command }) => ({
+    base: command === 'build' ? '/claude_code_treasure_game-initial/' : '/',
     plugins: [react()],
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
@@ -61,4 +61,4 @@
         '/api': 'http://localhost:3001',
       },
     },
-  });
+  }));
