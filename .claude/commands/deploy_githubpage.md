@@ -60,11 +60,17 @@ cp -r build /tmp/treasure-game-build
 # 切換到 gh-pages branch（若不存在則建立）
 git checkout gh-pages 2>/dev/null || git checkout --orphan gh-pages
 
+# 備份 .gitignore
+cp .gitignore /tmp/gitignore-backup 2>/dev/null || true
+
 # 清除所有檔案（保留 .git）
 git rm -rf . --quiet 2>/dev/null || true
 
 # 複製 build 內容回來
 cp -r /tmp/treasure-game-build/. .
+
+# 還原 .gitignore
+cp /tmp/gitignore-backup .gitignore 2>/dev/null || true
 
 # 建立 .nojekyll 避免 GitHub Pages 忽略底線開頭的檔案
 touch .nojekyll
