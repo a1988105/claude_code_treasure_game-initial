@@ -3,5 +3,5 @@ build/
 *.stackdump
 game.db
 .claude/
-!.claude/commands/
-!.claude/commands/**
+!.claude/**
+
