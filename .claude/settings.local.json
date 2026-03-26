@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git rm:*)",
+      "Bash(cp -r /tmp/treasure-game-build/. .)",
+      "Bash(cp /tmp/gitignore-backup .gitignore)",
+      "Bash(touch .nojekyll)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
+    ]
+  }
+}
