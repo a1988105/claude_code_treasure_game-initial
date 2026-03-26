@@ -52,29 +52,29 @@ export default function AuthModal({ open, onClose, onLogin }: AuthModalProps) {
       <DialogContent className="sm:max-w-sm !bg-amber-50 border-amber-300">
         <DialogHeader>
           <DialogTitle className="text-amber-900 text-xl">
-            {mode === 'login' ? '🔑 登入' : '📜 註冊'}
+            {mode === 'login' ? '🔑 Login' : '📜 Register'}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-2">
           <div>
-            <label className="text-sm text-amber-800 mb-1 block">帳號</label>
+            <label className="text-sm text-amber-800 mb-1 block">Account</label>
             <input
               type="text"
               value={username}
               onChange={e => setUsername(e.target.value)}
               className="w-full border border-amber-300 rounded-md px-3 py-2 bg-white text-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-400"
-              placeholder="輸入帳號"
+              placeholder="Enter Account"
               required
             />
           </div>
           <div>
-            <label className="text-sm text-amber-800 mb-1 block">密碼</label>
+            <label className="text-sm text-amber-800 mb-1 block">Password</label>
             <input
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
               className="w-full border border-amber-300 rounded-md px-3 py-2 bg-white text-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-400"
-              placeholder="輸入密碼"
+              placeholder="Enter Password"
               required
             />
           </div>
