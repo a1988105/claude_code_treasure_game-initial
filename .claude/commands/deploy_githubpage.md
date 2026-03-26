@@ -1,5 +1,78 @@
 部署這個專案到 GitHub Pages。請依照以下步驟執行：
 
+## 步驟零：前置檢查（自動引導）
+
+在做任何事之前，先執行以下檢查。**每個子步驟都必須確認通過才能繼續**。
+
+### 0-A：確認 git 是否已初始化
+
+```bash
+git rev-parse --is-inside-work-tree 2>/dev/null
+```
+
+若指令失敗（回傳非零），表示目前目錄尚未初始化 git。執行：
+
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+```
+
+### 0-B：確認 gh CLI 是否已安裝
+
+```bash
+gh --version 2>/dev/null
+```
+
+若指令失敗，告知用戶安裝 GitHub CLI：
+
+> 請先安裝 GitHub CLI：https://cli.github.com/
+> 安裝完成後重新執行 `/deploy_githubpage`
+
+**停止流程，等待用戶回報已安裝。**
+
+### 0-C：確認 gh CLI 是否已登入 GitHub
+
+```bash
+gh auth status 2>&1
+```
+
+若輸出包含 `not logged in` 或 `You are not logged into`，表示尚未登入。告知用戶：
+
+> 請在終端機執行以下指令登入 GitHub（Claude Code 無法代為執行互動式登入）：
+> ```
+> ! gh auth login
+> ```
+> 依照提示選擇 GitHub.com → HTTPS 或 SSH → Login with a web browser，完成後回來繼續。
+
+**停止流程，等待用戶回報已登入。**
+
+登入完成後，重新執行 `gh auth status` 確認登入成功，再繼續。
+
+### 0-D：確認是否有 GitHub remote（origin）
+
+```bash
+git remote get-url origin 2>/dev/null
+```
+
+若指令失敗（無 remote），表示尚未建立 GitHub Repo。執行以下步驟：
+
+**1. 取得當前目錄名稱作為預設 repo 名稱：**
+
+```bash
+basename "$(pwd)"
+```
+
+**2. 用 gh CLI 建立 GitHub Repo（Public）並推送：**
+
+```bash
+gh repo create <REPO_NAME> --public --source=. --remote=origin --push
+```
+
+若用戶想要 Private repo，改用 `--private`。建立完成後再執行一次 `git remote get-url origin` 確認 remote 已設定。
+
+---
+
 ## 步驟一：取得基本資訊
 
 ```bash
