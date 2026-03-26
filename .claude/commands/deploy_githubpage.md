@@ -55,35 +55,34 @@ npm run build
 
 ## 步驟四：部署到 gh-pages branch
 
+使用 git worktree，全程不切換 branch，避免 Claude Code 失去自訂指令：
+
 ```bash
-# 複製 build 內容到暫存目錄
-cp -r build /tmp/treasure-game-build
+# 移除舊的 worktree（若存在）
+git worktree remove /tmp/gh-pages-deploy --force 2>/dev/null || true
 
-# 切換到 gh-pages branch（若不存在則建立）
-git checkout gh-pages 2>/dev/null || git checkout --orphan gh-pages
+# 確保 gh-pages branch 存在（若不存在則建立孤立 branch）
+git fetch origin gh-pages:gh-pages 2>/dev/null || git branch gh-pages 2>/dev/null || true
 
-# 備份 .gitignore
-cp .gitignore /tmp/gitignore-backup 2>/dev/null || true
+# 建立 worktree 指向 gh-pages branch
+git worktree add /tmp/gh-pages-deploy gh-pages
 
-# 清除所有檔案（保留 .git）
-git rm -rf . --quiet 2>/dev/null || true
+# 清除 worktree 內容（保留 .git）
+git -C /tmp/gh-pages-deploy rm -rf . --quiet 2>/dev/null || true
 
-# 複製 build 內容回來
-cp -r /tmp/treasure-game-build/. .
-
-# 還原 .gitignore
-cp /tmp/gitignore-backup .gitignore 2>/dev/null || true
+# 複製 build 內容到 worktree
+cp -r build/. /tmp/gh-pages-deploy/
 
 # 建立 .nojekyll 避免 GitHub Pages 忽略底線開頭的檔案
-touch .nojekyll
+touch /tmp/gh-pages-deploy/.nojekyll
 
-# Commit 並推送
-git add -A
-git commit -m "Deploy to GitHub Pages"
-git push origin gh-pages --force
+# Commit 並推送（只加必要檔案，避免 .claude/ 等污染）
+git -C /tmp/gh-pages-deploy add assets/ index.html .nojekyll
+git -C /tmp/gh-pages-deploy commit -m "Deploy to GitHub Pages"
+git -C /tmp/gh-pages-deploy push origin gh-pages --force
 
-# 切回 main branch
-git checkout main
+# 清除 worktree
+git worktree remove /tmp/gh-pages-deploy --force
 ```
 
 ---
