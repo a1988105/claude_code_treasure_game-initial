@@ -28,7 +28,7 @@ export default function AuthModal({ open, onClose, onLogin }: AuthModalProps) {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || '發生錯誤');
+        setError(data.error || 'An error occurred');
       } else {
         onLogin(data.username);
         setUsername('');
@@ -36,7 +36,7 @@ export default function AuthModal({ open, onClose, onLogin }: AuthModalProps) {
         onClose();
       }
     } catch {
-      setError('無法連線到伺服器');
+      setError('Unable to connect to server');
     } finally {
       setLoading(false);
     }
@@ -84,12 +84,12 @@ export default function AuthModal({ open, onClose, onLogin }: AuthModalProps) {
             disabled={loading}
             className="bg-amber-600 hover:bg-amber-700 text-white"
           >
-            {loading ? '處理中...' : mode === 'login' ? '登入' : '註冊'}
+            {loading ? 'Processing...' : mode === 'login' ? 'Login' : 'Register'}
           </Button>
           <p className="text-center text-sm text-amber-700">
-            {mode === 'login' ? '還沒有帳號？' : '已有帳號？'}
+            {mode === 'login' ? "Don't have an account?" : 'Already have an account?'}
             <button type="button" onClick={switchMode} className="ml-1 underline text-amber-900 cursor-pointer">
-              {mode === 'login' ? '立即註冊' : '返回登入'}
+              {mode === 'login' ? 'Register now' : 'Back to login'}
             </button>
           </p>
         </form>
